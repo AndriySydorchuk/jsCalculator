@@ -2,12 +2,9 @@ const PLUS = '+';
 const MINUS = '-';
 const MULTIPLY = '*';
 const DIVIDE = '/';
+const EQUAL = '=';
 
-const num1 = Number(prompt('Enter the first number: '));
-const num2 = Number(prompt('Enter the second number: '));
-const operator = prompt('Enter an operation that have to be done with your numbers: ');
-    
-alert(operate(num1, num2, operator));
+const OPERATORS = [PLUS, MINUS, MULTIPLY, DIVIDE, EQUAL];
 
 function add(num1, num2) { return num1 + num2; }
 function subtract(num1, num2) { return num1 - num2; }
@@ -33,3 +30,33 @@ function operate(num1, num2, operator) {
             break;
     }
 }
+
+const displayEl = document.querySelector('.display');
+
+const digitBtns = document.querySelectorAll('.digits>button');
+const operatorBtns = document.querySelectorAll('.operators>button');
+
+
+digitBtns.forEach((digitBtn) => digitBtn.addEventListener('click', () => {
+    displayEl.textContent += digitBtn.textContent;
+}));
+
+operatorBtns.forEach((operatorBtn) => operatorBtn.addEventListener('click', () => {
+    if(operatorBtn.textContent !== EQUAL) {
+        displayEl.textContent += operatorBtn.textContent;
+    } else {
+        const userInput = displayEl.textContent.split('');
+
+        const oper = userInput.filter((char) => OPERATORS.includes(char))[0];
+        const operIndex = userInput.indexOf(oper);
+
+        const num1 = Number(userInput.filter((char, index) => {
+            if(index < operIndex) return char;
+        }).join(''));
+        const num2 = Number(userInput.filter((char, index) => {
+            if (index > operIndex) return char;
+        }).join(''));
+
+        displayEl.textContent = operate(num1, num2, oper);
+    }
+}));
