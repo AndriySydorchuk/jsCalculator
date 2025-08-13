@@ -60,3 +60,46 @@ const clearBtn = document.querySelector('.clear-btn');
 clearBtn.addEventListener('click', () => {
     displayEl.textContent = '';
 });
+
+const dotBtn = document.querySelector('.dot-btn');
+
+dotBtn.addEventListener('click', () => {
+
+    const displayedText = displayEl.textContent;
+
+    if(displayedText.includes('.')) {
+        const includesOperator = operators.reduce((include, operator) => {
+            if (displayedText.includes(operator)) {
+                include = true;
+            }
+
+            if(include === true) return true;
+
+            return false;
+            
+        }, false);
+
+        if(includesOperator) {
+            const dotsCount = displayedText.split('').filter((char) => char === '.').length;
+            if(dotsCount === 2) return;
+
+            const userInput = displayedText.split('');
+
+            const oper = userInput.filter((char) => operators.includes(char))[0];
+            const operIndex = userInput.indexOf(oper);
+
+            if(displayedText.length === operIndex + 1) {
+                displayEl.textContent += '0.';
+            } else {
+                displayEl.textContent += '.';
+            }
+        }
+
+    } else {
+        if(displayedText === '') {
+            displayEl.textContent = '0.';
+        } else {
+            displayEl.textContent += '.';
+        }
+    }
+});
