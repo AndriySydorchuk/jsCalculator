@@ -1,10 +1,4 @@
-const PLUS = '+';
-const MINUS = '-';
-const MULTIPLY = '*';
-const DIVIDE = '/';
-const EQUAL = '=';
-
-const OPERATORS = [PLUS, MINUS, MULTIPLY, DIVIDE, EQUAL];
+const operators = ['+', '-', '*', '/', '='];
 
 function add(num1, num2) { return num1 + num2; }
 function subtract(num1, num2) { return num1 - num2; }
@@ -13,16 +7,16 @@ function divide(num1, num2) { return num1 / num2; }
 
 function operate(num1, num2, operator) {
     switch (operator) {
-        case PLUS:
+        case '+':
             return add(num1, num2);
             break;
-        case MINUS:
+        case '-':
             return subtract(num1, num2);
             break;
-        case MULTIPLY:
+        case '*':
             return multiply(num1, num2);
             break;
-        case DIVIDE:
+        case '/':
             return divide(num1, num2);
             break;
     
@@ -42,12 +36,12 @@ digitBtns.forEach((digitBtn) => digitBtn.addEventListener('click', () => {
 }));
 
 operatorBtns.forEach((operatorBtn) => operatorBtn.addEventListener('click', () => {
-    if(operatorBtn.textContent !== EQUAL) {
+    if(operatorBtn.textContent !== '=') {
         displayEl.textContent += operatorBtn.textContent;
     } else {
         const userInput = displayEl.textContent.split('');
 
-        const oper = userInput.filter((char) => OPERATORS.includes(char))[0];
+        const oper = userInput.filter((char) => operators.includes(char))[0];
         const operIndex = userInput.indexOf(oper);
 
         const num1 = Number(userInput.filter((char, index) => {
