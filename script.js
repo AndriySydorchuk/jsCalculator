@@ -19,7 +19,7 @@ function operate(num1, num2, operator) {
         case '/':
             return divide(num1, num2);
             break;
-    
+
         default:
             break;
     }
@@ -36,24 +36,37 @@ digitBtns.forEach((digitBtn) => digitBtn.addEventListener('click', () => {
 }));
 
 operatorBtns.forEach((operatorBtn) => operatorBtn.addEventListener('click', () => {
-    if(operatorBtn.textContent !== '=') {
+    if (operatorBtn.textContent !== '=') {
         displayEl.textContent += operatorBtn.textContent;
     } else {
-        const userInput = displayEl.textContent.split('');
-
-        const oper = userInput.filter((char) => operators.includes(char))[0];
-        const operIndex = userInput.indexOf(oper);
-
-        const num1 = Number(userInput.filter((char, index) => {
-            if(index < operIndex) return char;
-        }).join(''));
-        const num2 = Number(userInput.filter((char, index) => {
-            if (index > operIndex) return char;
-        }).join(''));
-
-        displayEl.textContent = operate(num1, num2, oper);
+        displayEl.textContent = calcInput();
     }
 }));
+
+function calcInput() {
+    const userInput = displayEl.textContent.split('');
+
+    const opersInInput = userInput.filter((char) => operators.includes(char));
+
+    const isNegativeCalc = opersInInput.length > 1 && opersInInput[0] === '-';
+    const operIndex = isNegativeCalc ? userInput.lastIndexOf(opersInInput[1]) : userInput.indexOf(opersInInput[0]);
+
+    const nums = getNums(userInput, operIndex);
+
+    return operate(nums.first, nums.second, userInput[operIndex]);
+}
+
+function getNums(inputArr, operIndex) {
+    let nums = {};
+    nums.first = Number(inputArr.filter((char, index) => {
+        if (index < operIndex) return char;
+    }).join(''));
+    nums.second = Number(inputArr.filter((char, index) => {
+        if (index > operIndex) return char;
+    }).join(''));
+
+    return nums;
+}
 
 const clearBtn = document.querySelector('.clear-btn');
 
@@ -67,28 +80,28 @@ dotBtn.addEventListener('click', () => {
 
     const displayedText = displayEl.textContent;
 
-    if(displayedText.includes('.')) {
+    if (displayedText.includes('.')) {
         const includesOperator = operators.reduce((include, operator) => {
             if (displayedText.includes(operator)) {
                 include = true;
             }
 
-            if(include === true) return true;
+            if (include === true) return true;
 
             return false;
-            
+
         }, false);
 
-        if(includesOperator) {
+        if (includesOperator) {
             const dotsCount = displayedText.split('').filter((char) => char === '.').length;
-            if(dotsCount === 2) return;
+            if (dotsCount === 2) return;
 
             const userInput = displayedText.split('');
 
             const oper = userInput.filter((char) => operators.includes(char))[0];
             const operIndex = userInput.indexOf(oper);
 
-            if(displayedText.length === operIndex + 1) {
+            if (displayedText.length === operIndex + 1) {
                 displayEl.textContent += '0.';
             } else {
                 displayEl.textContent += '.';
@@ -96,7 +109,7 @@ dotBtn.addEventListener('click', () => {
         }
 
     } else {
-        if(displayedText === '') {
+        if (displayedText === '') {
             displayEl.textContent = '0.';
         } else {
             displayEl.textContent += '.';
