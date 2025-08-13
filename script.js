@@ -54,3 +54,9 @@ operatorBtns.forEach((operatorBtn) => operatorBtn.addEventListener('click', () =
         displayEl.textContent = operate(num1, num2, oper);
     }
 }));
+
+const clearBtn = document.querySelector('.clear-btn');
+
+clearBtn.addEventListener('click', () => {
+    displayEl.textContent = '';
+});
