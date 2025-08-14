@@ -70,3 +70,12 @@ button {
     cursor: pointer;
     width: 86px;
 }
+
+.erase-btn > img {
+    width: 50%;
+    height: auto;
+}
+
+.zero-btn {
+    width: 95%;
+}
