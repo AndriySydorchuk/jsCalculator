@@ -105,6 +105,9 @@ dotBtn.addEventListener('click', () => {
         }
 
     } else {
-        displayedText === '' ? displayEl.textContent = '0.' :  displayEl.textContent += '.';
+        displayedText === '' ? displayEl.textContent = '0.' : displayEl.textContent += '.';
     }
 });
+
+const eraseBtn = document.querySelector('.erase-btn');
+eraseBtn.addEventListener('click', () => displayEl.textContent = displayEl.textContent.slice(0, -1));
