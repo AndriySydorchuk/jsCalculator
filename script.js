@@ -31,16 +31,10 @@ const digitBtns = document.querySelectorAll('.digits>button');
 const operatorBtns = document.querySelectorAll('.operators>button');
 
 
-digitBtns.forEach((digitBtn) => digitBtn.addEventListener('click', () => {
-    displayEl.textContent += digitBtn.textContent;
-}));
+digitBtns.forEach((digitBtn) => digitBtn.addEventListener('click', () => addToDisplay(digitBtn.textContent)));
 
 operatorBtns.forEach((operatorBtn) => operatorBtn.addEventListener('click', () => {
-    if (operatorBtn.textContent !== '=') {
-        displayEl.textContent += operatorBtn.textContent;
-    } else {
-        displayEl.textContent = calcInput();
-    }
+    operatorBtn.textContent === '=' ? setDisplay(calcInput()) : addToDisplay(operatorBtn.textContent);
 }));
 
 function calcInput() {
@@ -101,13 +95,21 @@ dotBtn.addEventListener('click', () => {
             const oper = userInput.filter((char) => operators.includes(char))[0];
             const operIndex = userInput.indexOf(oper);
 
-            displayedText.length === operIndex + 1 ? displayEl.textContent += '0.' : displayEl.textContent += '.';
+            displayedText.length === operIndex + 1 ? addToDisplay('0.') : addToDisplay('.');
         }
 
     } else {
-        displayedText === '' ? displayEl.textContent = '0.' : displayEl.textContent += '.';
+        displayedText === '' ? setDisplay('0.') : addToDisplay('.');
     }
 });
 
 const eraseBtn = document.querySelector('.erase-btn');
-eraseBtn.addEventListener('click', () => displayEl.textContent = displayEl.textContent.slice(0, -1));
+eraseBtn.addEventListener('click', () => setDisplay(displayEl.textContent.slice(0, -1)));
+
+function addToDisplay(str) {
+    displayEl.textContent += str;
+}
+
+function setDisplay(str) {
+    displayEl.textContent = str;
+}
