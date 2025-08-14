@@ -101,18 +101,10 @@ dotBtn.addEventListener('click', () => {
             const oper = userInput.filter((char) => operators.includes(char))[0];
             const operIndex = userInput.indexOf(oper);
 
-            if (displayedText.length === operIndex + 1) {
-                displayEl.textContent += '0.';
-            } else {
-                displayEl.textContent += '.';
-            }
+            displayedText.length === operIndex + 1 ? displayEl.textContent += '0.' : displayEl.textContent += '.';
         }
 
     } else {
-        if (displayedText === '') {
-            displayEl.textContent = '0.';
-        } else {
-            displayEl.textContent += '.';
-        }
+        displayedText === '' ? displayEl.textContent = '0.' :  displayEl.textContent += '.';
     }
 });
